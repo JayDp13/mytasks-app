@@ -1,28 +1,28 @@
-# MyTasks — installable mobile To-Do app
+# MyTasks — Tasks + Winter Arc
 
-A mobile-first, offline-capable Progressive Web App (PWA).
+A mobile-first installable PWA with:
 
-## Features
-- Add tasks
-- Mark tasks complete/pending
-- Delete tasks
-- All / Pending / Done filters
-- Clear completed tasks
+- Normal to-do tasks
+- Complete/delete/filter tasks
 - Dark mode
-- Local storage: tasks stay on the device
-- Offline support after first load
-- Installable on Android/iPhone as a home-screen app
+- Offline support
+- Winter Arc tracker for Oct 1–Dec 31, 2026
+- Daily habit checklist
+- Custom Winter Arc habits
+- Daily notes
+- Current and best streaks
+- Overall arc progress
+- Daily progress calendar
+- Local storage; no backend required
 
-## Quick test on a PC
-Run a local web server from this folder:
+## Run locally
 
-Python 3:
-`python -m http.server 8080`
+```bash
+python -m http.server 8080
+```
 
-Then open `http://localhost:8080`.
+Open http://localhost:8080
 
-## Install on Android
-For a direct install, host the folder on HTTPS (GitHub Pages, Netlify, Vercel, etc.), open the HTTPS address in Chrome on the phone, then use Chrome's **Install app** / **Add to Home screen** option.
+## Deploy
 
-## Important
-The app stores tasks in browser localStorage. It does not use a server or account, so tasks do not automatically sync between devices.
+Upload the files to a GitHub repository and enable GitHub Pages from `main` / root.

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#111827" />
-  <meta name="description" content="A simple offline to-do tasks app." />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="description" content="MyTasks - tasks and Winter Arc daily habit tracking." />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="icon-192.png" />
@@ -22,35 +22,132 @@
       <button id="themeBtn" class="icon-btn" aria-label="Toggle dark mode">☾</button>
     </header>
 
-    <section class="stats" aria-label="Task statistics">
-      <div><strong id="totalCount">0</strong><span>Total</span></div>
-      <div><strong id="activeCount">0</strong><span>Pending</span></div>
-      <div><strong id="doneCount">0</strong><span>Done</span></div>
-    </section>
-
-    <section class="composer">
-      <input id="taskInput" type="text" maxlength="120" placeholder="What needs to be done?" autocomplete="off" />
-      <button id="addBtn" class="primary">Add</button>
-    </section>
-
-    <nav class="filters" aria-label="Task filters">
-      <button class="filter active" data-filter="all">All</button>
-      <button class="filter" data-filter="active">Pending</button>
-      <button class="filter" data-filter="done">Done</button>
+    <nav class="main-tabs" aria-label="Main sections">
+      <button class="main-tab active" data-view="tasks">Tasks</button>
+      <button class="main-tab" data-view="winter">❄ Winter Arc</button>
     </nav>
 
-    <section id="taskList" class="task-list" aria-live="polite"></section>
+    <!-- TASKS -->
+    <section id="tasksView" class="view">
+      <section class="stats" aria-label="Task statistics">
+        <div><strong id="totalCount">0</strong><span>Total</span></div>
+        <div><strong id="activeCount">0</strong><span>Pending</span></div>
+        <div><strong id="doneCount">0</strong><span>Done</span></div>
+      </section>
 
-    <section id="emptyState" class="empty hidden">
-      <div class="empty-icon">✓</div>
-      <h2 id="emptyTitle">No tasks yet</h2>
-      <p id="emptyText">Add your first task above and start getting things done.</p>
+      <section class="composer">
+        <input id="taskInput" type="text" maxlength="120" placeholder="What needs to be done?" autocomplete="off" />
+        <button id="addBtn" class="primary">Add</button>
+      </section>
+
+      <nav class="filters" aria-label="Task filters">
+        <button class="filter active" data-filter="all">All</button>
+        <button class="filter" data-filter="active">Pending</button>
+        <button class="filter" data-filter="done">Done</button>
+      </nav>
+
+      <section id="taskList" class="task-list" aria-live="polite"></section>
+
+      <section id="emptyState" class="empty hidden">
+        <div class="empty-icon">✓</div>
+        <h2 id="emptyTitle">No tasks yet</h2>
+        <p id="emptyText">Add your first task above and start getting things done.</p>
+      </section>
+
+      <footer>
+        <button id="clearDone" class="text-btn">Clear completed</button>
+      </footer>
     </section>
 
-    <footer>
-      <button id="clearDone" class="text-btn">Clear completed</button>
-    </footer>
+    <!-- WINTER ARC -->
+    <section id="winterView" class="view hidden">
+      <section class="winter-hero">
+        <div class="winter-title-row">
+          <div>
+            <p class="eyebrow winter-eyebrow">DISCIPLINE SEASON</p>
+            <h2>❄ Winter Arc</h2>
+            <p id="winterDates" class="date"></p>
+          </div>
+          <div class="days-left"><strong id="daysLeft">0</strong><span>days left</span></div>
+        </div>
+        <div class="progress-track"><div id="arcProgressBar" class="progress-bar"></div></div>
+        <div class="progress-meta"><span id="arcProgressText">0% complete</span><span id="arcDayText">Day 1</span></div>
+      </section>
+
+      <section class="arc-stats">
+        <div class="arc-stat"><strong id="todayPercent">0%</strong><span>Today</span></div>
+        <div class="arc-stat"><strong id="currentStreak">0</strong><span>Day streak</span></div>
+        <div class="arc-stat"><strong id="bestStreak">0</strong><span>Best streak</span></div>
+      </section>
+
+      <section class="date-picker-card">
+        <button id="prevDay" class="small-btn" aria-label="Previous day">‹</button>
+        <div class="selected-date-wrap">
+          <span>TRACKING DAY</span>
+          <strong id="selectedDateLabel"></strong>
+        </div>
+        <button id="nextDay" class="small-btn" aria-label="Next day">›</button>
+      </section>
+
+      <section class="habit-card">
+        <div class="section-heading">
+          <div>
+            <h3>Daily habits</h3>
+            <p id="habitSummary">0 of 0 complete</p>
+          </div>
+          <button id="addHabitBtn" class="secondary">+ Habit</button>
+        </div>
+        <div id="habitList" class="habit-list"></div>
+        <div id="habitEmpty" class="habit-empty hidden">Add your first habit to start your Winter Arc.</div>
+      </section>
+
+      <section class="reflection-card">
+        <div class="section-heading">
+          <div>
+            <h3>Daily note</h3>
+            <p>A quick reflection for this day</p>
+          </div>
+        </div>
+        <textarea id="dailyNote" maxlength="500" placeholder="What did you accomplish today?"></textarea>
+      </section>
+
+      <section class="arc-calendar-card">
+        <div class="section-heading">
+          <div>
+            <h3>Arc calendar</h3>
+            <p>Tap a day to review or update it</p>
+          </div>
+        </div>
+        <div id="arcCalendar" class="arc-calendar"></div>
+      </section>
+
+      <section class="winter-actions">
+        <button id="manageHabitsBtn" class="text-btn">Manage habits</button>
+        <button id="resetArcBtn" class="text-btn danger-text">Reset Winter Arc data</button>
+      </section>
+    </section>
   </main>
+
+  <dialog id="habitDialog">
+    <form method="dialog" id="habitForm" class="dialog-card">
+      <h3>Add Winter Arc habit</h3>
+      <p>Create a habit you want to track every day.</p>
+      <label>Habit name<input id="habitName" maxlength="50" placeholder="e.g. 90 min GATE study" required /></label>
+      <div class="dialog-actions">
+        <button value="cancel" class="secondary">Cancel</button>
+        <button id="saveHabitBtn" value="default" class="primary dialog-primary">Add habit</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="manageDialog">
+    <form method="dialog" class="dialog-card wide-dialog">
+      <h3>Manage Winter Arc habits</h3>
+      <p>Remove habits you no longer want to track. Existing history is kept.</p>
+      <div id="manageHabitList" class="manage-list"></div>
+      <div class="dialog-actions"><button value="cancel" class="secondary">Done</button></div>
+    </form>
+  </dialog>
 
   <script src="app.js"></script>
 </body>
